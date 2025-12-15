@@ -33,7 +33,7 @@ const AboutMe = () => {
                 <div style={styles.content}>
                     <h3 style={styles.title}>ໃຫ້ເດົາວ່າແມ່ນໃຜ</h3>
                     <p style={styles.text}>
-                        ໃໍຊ້ໆໄປເທາະະະ
+                        ໃໍຊ້ໆໄປເທາະະະ ຢ່າຢາກຮູ້ເລີຍຍ
                     </p>
                 </div>
             </div>
