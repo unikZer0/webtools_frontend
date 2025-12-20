@@ -82,6 +82,11 @@ const Category = () => {
                         title="ເຈນ QR Code"
                         description="ສ້າງຄິວອາຈາກລິ້ງ ຫຼື ຂໍ້ຄວາມເປັນ QR."
                     />
+                    <ToolCard
+                        to="/tools/image"
+                        title="ແປງຮູບພາບ"
+                        description="ແປງຮູບ HEIC, JPG ເປັນ PNG."
+                    />
                 </div>
             </div>
         </section>

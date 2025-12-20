@@ -110,6 +110,14 @@ const Navbar = () => {
                                     ໂຕແປງວີດີໂອເປັນພາບ
                                 </Link>
                                 <Link
+                                    to="/tools/image"
+                                    style={styles.dropdownItem}
+                                    onMouseOver={e => { e.target.style.background = 'rgba(255,255,255,0.05)'; e.target.style.color = 'var(--text-primary)'; }}
+                                    onMouseOut={e => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--text-secondary)'; }}
+                                >
+                                    ແປງຮູບພາບ
+                                </Link>
+                                <Link
                                     to="/tools/qr"
                                     style={styles.dropdownItem}
                                     onMouseOver={e => { e.target.style.background = 'rgba(255,255,255,0.05)'; e.target.style.color = 'var(--text-primary)'; }}

@@ -7,6 +7,8 @@ import Footer from './components/Footer';
 import VideoConverterTool from './components/tools/VideoConverterTool';
 import QRCodeTool from './components/tools/QRCodeTool';
 
+import ImageConverterTool from './components/tools/ImageConverterTool';
+
 const HomePage = () => {
   const styles = {
     hero: {
@@ -33,18 +35,18 @@ const HomePage = () => {
       <section id="home" style={styles.hero}>
         <div className="container">
           <h1 style={styles.heroTitle}>
-            ເວັບເຄື່ອງມືຊິວໆ ສຳລັບຄົນຊິວໆ <br />
+            ເວັບເຄື່ອງມືຊິວໆ <br />
             <span style={{
               background: 'var(--gradient-main)',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
-              ໃຜກາໃຊ້ໄດ້ນະນ້ອງ
+              ຂອງດີໆ
             </span>
           </h1>
           <p style={styles.heroSubtitle}>
-            ໃຊ້ໆໄປເທາະ ຢ່າໄປຕື່ນ
+            ໃຊ້ໆໄປເທາະ
           </p>
         </div>
       </section>
@@ -78,6 +80,14 @@ function App() {
               <h2 className="section-title">ໂຕແປງວີດີໂອເປັນພາບ</h2>
             </div>
             <VideoConverterTool />
+          </ToolWrapper>
+        } />
+        <Route path="/tools/image" element={
+          <ToolWrapper>
+            <div className="container" style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <h2 className="section-title">ໂຕແປງຮູບພາບ</h2>
+            </div>
+            <ImageConverterTool />
           </ToolWrapper>
         } />
         <Route path="/tools/qr" element={
