@@ -19,7 +19,7 @@ const VideoConverterTool = () => {
 
         try {
             const res = await fetch(
-                            "http://webtools.uniqueahh.site/video-to-frames-zip",
+                            "http://api.uniqueahh.site/video-to-frames-zip",
                             {
                             method: "POST",
                             body: formData,
