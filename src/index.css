@@ -9,8 +9,12 @@
   --accent-secondary: #818cf8;
   --gradient-main: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
   --font-main: 'Phetsarath OT', 'Noto Sans Lao', 'Inter', system-ui, -apple-system, sans-serif;
+  --bp-mobile: 768px;
 }
 
+/* =====================
+   RESET / BASE
+===================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -23,6 +27,10 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+}
+
+body.menu-open {
+  overflow: hidden;
 }
 
 a {
@@ -42,7 +50,9 @@ button {
   font-family: inherit;
 }
 
-/* Utilities */
+/* =====================
+   UTILITIES
+===================== */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -60,7 +70,9 @@ button {
   -webkit-text-fill-color: transparent;
 }
 
-/* Animations */
+/* =====================
+   ANIMATIONS
+===================== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -75,4 +87,166 @@ button {
 
 .animate-fade-in {
   animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* =====================
+   NAVBAR
+===================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.5rem 0;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.navbar.scrolled {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =====================
+   DESKTOP NAV
+===================== */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-link {
+  font-weight: 500;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-secondary);
+  padding: 0.5rem;
+  border-radius: 8px;
+  min-width: 200px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary);
+  border-radius: 4px;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+/* =====================
+   MOBILE NAV
+===================== */
+.mobile-menu-btn {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  color: var(--text-primary);
+}
+
+/* Overlay */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 2000;
+}
+
+/* Slide menu */
+.mobile-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 85%;
+  max-width: 320px;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.98);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.mobile-close-btn {
+  align-self: flex-end;
+  font-size: 1.5rem;
+  background: none;
+  color: var(--text-primary);
+}
+
+.mobile-dropdown-btn {
+  background: none;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.mobile-submenu {
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
 }

@@ -5,133 +5,117 @@ import '../index.css';
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
 
+    // Scroll effect
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
+        const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Close menus on route change
     useEffect(() => {
-        setDropdownOpen(false);
+        closeMobileMenu();
     }, [location]);
 
-    const styles = {
-        nav: {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            zIndex: 1000,
-            transition: 'all 0.3s ease',
-            background: scrolled ? 'rgba(15, 23, 42, 0.95)' : 'transparent',
-            backdropFilter: scrolled ? 'blur(10px)' : 'none',
-            borderBottom: scrolled ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
-            padding: scrolled ? '1rem 0' : '1.5rem 0',
-        },
-        container: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-        },
-        logo: {
-            fontSize: '1.5rem',
-            fontWeight: '800',
-            background: 'var(--gradient-main)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textDecoration: 'none',
-        },
-        links: {
-            display: 'flex',
-            gap: '2rem',
-            listStyle: 'none',
-            alignItems: 'center',
-        },
-        link: {
-            color: 'var(--text-primary)',
-            fontWeight: '500',
-            fontSize: '1rem',
-            cursor: 'pointer',
-            position: 'relative',
-        },
-        dropdownWrapper: {
-            position: 'absolute',
-            top: '100%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            paddingTop: '15px', // Transparent bridge for hover
-            minWidth: '200px',
-            display: dropdownOpen ? 'block' : 'none',
-            zIndex: 1100,
-        },
-        dropdownContent: {
-            background: 'var(--bg-secondary)',
-            borderRadius: '8px',
-            padding: '0.5rem',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)',
-        },
-        dropdownItem: {
-            display: 'block',
-            padding: '0.75rem 1rem',
-            color: 'var(--text-secondary)',
-            textDecoration: 'none',
-            borderRadius: '4px',
-            transition: 'all 0.2s',
-        }
+    // ESC key close
+    useEffect(() => {
+        const handleEsc = (e) => {
+            if (e.key === 'Escape') closeMobileMenu();
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, []);
+
+    // Body scroll lock (safe)
+    useEffect(() => {
+        document.body.classList.toggle('menu-open', isMobileMenuOpen);
+    }, [isMobileMenuOpen]);
+
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+        setDropdownOpen(false);
     };
 
     return (
-        <nav style={styles.nav}>
-            <div className="container" style={styles.container}>
-                <Link to="/" style={styles.logo}>WebTools.io</Link>
-                <ul style={styles.links}>
-                    <li><Link to="/" style={styles.link}>ຫນ້າຫຼັກ</Link></li>
+        <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+            <div className="container navbar-inner">
+                <Link to="/" className="logo">
+                    WebTools.io
+                </Link>
+
+                {/* Desktop Nav */}
+                <ul className="nav-links desktop-nav">
+                    <li>
+                        <Link to="/" className="nav-link">ຫນ້າຫຼັກ</Link>
+                    </li>
 
                     <li
-                        style={{ position: 'relative' }}
+                        className="dropdown"
                         onMouseEnter={() => setDropdownOpen(true)}
                         onMouseLeave={() => setDropdownOpen(false)}
                     >
-                        <span style={styles.link}>
-                            ເຄື່ອງມື ▾
-                        </span>
-                        <div style={styles.dropdownWrapper}>
-                            <div style={styles.dropdownContent}>
-                                <Link
-                                    to="/tools/video"
-                                    style={styles.dropdownItem}
-                                    onMouseOver={e => { e.target.style.background = 'rgba(255,255,255,0.05)'; e.target.style.color = 'var(--text-primary)'; }}
-                                    onMouseOut={e => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--text-secondary)'; }}
-                                >
-                                    ໂຕແປງວີດີໂອເປັນພາບ
-                                </Link>
-                                <Link
-                                    to="/tools/image"
-                                    style={styles.dropdownItem}
-                                    onMouseOver={e => { e.target.style.background = 'rgba(255,255,255,0.05)'; e.target.style.color = 'var(--text-primary)'; }}
-                                    onMouseOut={e => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--text-secondary)'; }}
-                                >
-                                    ແປງຮູບພາບ
-                                </Link>
-                                <Link
-                                    to="/tools/qr"
-                                    style={styles.dropdownItem}
-                                    onMouseOver={e => { e.target.style.background = 'rgba(255,255,255,0.05)'; e.target.style.color = 'var(--text-primary)'; }}
-                                    onMouseOut={e => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--text-secondary)'; }}
-                                >
-                                    ເຈນ QR Code
-                                </Link>
-                            </div>
+                        <span className="nav-link">ເຄື່ອງມື ▾</span>
+                        <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
+                            <Link to="/tools/video" className="dropdown-item">ໂຕແປງວີດີໂອເປັນພາບ</Link>
+                            <Link to="/tools/image" className="dropdown-item">ແປງຮູບພາບ</Link>
+                            <Link to="/tools/qr" className="dropdown-item">ເຈນ QR Code</Link>
                         </div>
                     </li>
 
-                    <li><Link to="/about" style={styles.link}>ກ່ຽວກັບຂ້ອຍຍຍ</Link></li>
+                    <li>
+                        <Link to="/about" className="nav-link">ກ່ຽວກັບຂ້ອຍຍຍ</Link>
+                    </li>
                 </ul>
+
+                {/* Hamburger */}
+                <button
+                    className="mobile-menu-btn"
+                    onClick={() => setIsMobileMenuOpen(true)}
+                    aria-label="Open menu"
+                >
+                    ☰
+                </button>
             </div>
+
+            {/* Mobile Overlay + Menu */}
+            {isMobileMenuOpen && (
+                <div className="mobile-overlay" onClick={closeMobileMenu}>
+                    <div
+                        className="mobile-menu"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            className="mobile-close-btn"
+                            onClick={closeMobileMenu}
+                            aria-label="Close menu"
+                        >
+                            ✕
+                        </button>
+
+                        <Link to="/" onClick={closeMobileMenu}>ຫນ້າຫຼັກ</Link>
+
+                        <button
+                            className="mobile-dropdown-btn"
+                            onClick={() => setDropdownOpen(!dropdownOpen)}
+                        >
+                            ເຄື່ອງມື ▾
+                        </button>
+
+                        {dropdownOpen && (
+                            <div className="mobile-submenu">
+                                <Link to="/tools/video" onClick={closeMobileMenu}>ໂຕແປງວີດີໂອເປັນພາບ</Link>
+                                <Link to="/tools/image" onClick={closeMobileMenu}>ແປງຮູບພາບ</Link>
+                                <Link to="/tools/qr" onClick={closeMobileMenu}>ເຈນ QR Code</Link>
+                            </div>
+                        )}
+
+                        <Link to="/about" onClick={closeMobileMenu}>ກ່ຽວກັບຂ້ອຍຍຍ</Link>
+                    </div>
+                </div>
+            )}
         </nav>
     );
 };
