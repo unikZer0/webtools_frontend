@@ -27,7 +27,7 @@ const ImageConverterTool = () => {
         }
 
         try {
-            const response = await fetch('http://api.uniqueahh.site/convert-image', {
+            const response = await fetch('https://api.uniqueahh.site/convert-image', {
                 method: 'POST',
                 body: formData,
             });
